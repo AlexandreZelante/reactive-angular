@@ -4,7 +4,6 @@ import {interval, noop, Observable, of, throwError, timer} from 'rxjs';
 import {catchError, delay, delayWhen, filter, finalize, map, retryWhen, shareReplay, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {CourseDialogComponent} from '../course-dialog/course-dialog.component';
 import { CoursesService } from '../courses.service';
 
 
@@ -20,12 +19,15 @@ export class HomeComponent implements OnInit {
   advancedCourses$: Observable<Course[]>;
 
 
-  constructor(private coursesService: CoursesService, private dialog: MatDialog) {
+  constructor(private coursesService: CoursesService) {
 
   }
 
   ngOnInit() {
+    this.reloadCourses();
+  }
 
+  reloadCourses() {
     // Add a $ for all variables that represents an Observable
     const courses$ = this.coursesService.loadAllCourses().pipe(
       map(courses => courses.sort(sortCoursesBySeqNo))
@@ -38,24 +40,7 @@ export class HomeComponent implements OnInit {
     this.advancedCourses$ = courses$.pipe(
       map(courses => courses.filter(course => course.category === 'ADVANCED'))
     )
-
-
   }
-
-  editCourse(course: Course) {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "400px";
-
-    dialogConfig.data = course;
-
-    const dialogRef = this.dialog.open(CourseDialogComponent, dialogConfig);
-
-  }
-
 }
 
 
