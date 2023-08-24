@@ -7,6 +7,10 @@ import { concatMap, finalize, tap } from "rxjs/operators";
 export class LoadingService {
   // BehaviorSubject remember the last value
 
+  constructor() {
+    console.log(" Loading service created...");
+  }
+
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
   loading$: Observable<boolean> = this.loadingSubject.asObservable();
