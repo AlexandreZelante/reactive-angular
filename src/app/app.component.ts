@@ -6,8 +6,6 @@ import { MessagesService } from "./messages.service";
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
-  // Will be visible only to app.component and to its children
-  providers: [LoadingService, MessagesService],
 })
 export class AppComponent implements OnInit {
   constructor() {}
